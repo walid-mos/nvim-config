@@ -101,6 +101,7 @@ return {
             rust_analyzer = {},
             tsserver = {},
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+            eslint = {},
 
             lua_ls = {
                 Lua = {
@@ -130,12 +131,19 @@ return {
                 end
 
                 if server_name == "eslint" then
-                    on_attach = function(_, bufnr)
+                    opts.on_attach = function(_, bufnr)
                         vim.api.nvim_create_autocmd("BufWritePre", {
                             buffer = bufnr,
                             command = "EslintFixAll",
                         })
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            pattern = "*",
+                            callback = function(args)
+                                require("conform").format({ bufnr = args.buf })
+                            end,
+                        })
                     end
+                    opts.capabilities = nil
                 end
 
                 require('lspconfig')[server_name].setup(opts)
