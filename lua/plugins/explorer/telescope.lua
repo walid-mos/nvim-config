@@ -5,6 +5,9 @@ local cfg = {
         find_files = {
             hidden = true
         },
+        buffers = {
+            initial_mode = "normal"
+        }
     },
     defaults = {
         file_ignore_patterns = {
@@ -19,6 +22,10 @@ local cfg = {
                 ['<C-u>'] = false,
                 ['<C-d>'] = false,
             },
+            n = {
+                ["ss"] = "select_vertical",
+                ["sh"] = "select_horizontal"
+            }
         },
         theme = "center",
         sorting_strategy = "ascending",
@@ -34,6 +41,7 @@ local cfg = {
             -- disables netrw and use telescope-file-browser in its place
             hijack_netrw = true,
             initial_mode = "normal",
+            no_ignore = true,
             hidden = {
                 file_browser = true,
                 folder_browser = true,
@@ -93,7 +101,7 @@ return {
 
                 -- Find the Git root directory from the current file's path
                 local git_root = vim.fn.systemlist("git -C " ..
-                vim.fn.escape(current_dir, " ") .. " rev-parse --show-toplevel")[1]
+                    vim.fn.escape(current_dir, " ") .. " rev-parse --show-toplevel")[1]
                 if vim.v.shell_error ~= 0 then
                     print("Not a git repository. Searching on current working directory")
                     return cwd
@@ -110,6 +118,26 @@ return {
                     })
                 end
             end
+
+            -- Telescope as Harpoon UI
+            local conf = require("telescope.config").values
+            local function toggle_telescope(harpoon_files)
+                local file_paths = {}
+                for _, item in ipairs(harpoon_files.items) do
+                    table.insert(file_paths, item.value)
+                end
+
+                require("telescope.pickers").new({
+                    initial_mode = 'normal' }, {
+                    prompt_title = "Harpoon",
+                    finder = require("telescope.finders").new_table({
+                        results = file_paths,
+                    }),
+                    previewer = conf.file_previewer({}),
+                    sorter = conf.generic_sorter({}),
+                }):find()
+            end
+
 
             vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
@@ -134,9 +162,10 @@ return {
             vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
             vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
             vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+
+            vim.keymap.set('n', '<leader>hw', function() toggle_telescope(require('harpoon'):list()) end,
+                { desc = 'Open [H]arpoon [W]indow' })
         end,
-        -- [[ Configure Telescope ]]
-        -- See `:help telescope` and `:help telescope.setup()`
     },
     {
         "nvim-telescope/telescope-file-browser.nvim",

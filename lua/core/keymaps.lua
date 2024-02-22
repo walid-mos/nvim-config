@@ -11,8 +11,8 @@ local opts = { noremap = true, silent = true }
 keymap('n', '<leader>-', ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { desc = 'Open file explorer' })
 
 -- Buffer
-keymap("n", "<TAB>", ":bn<CR>")
-keymap("n", "<S-TAB>", ":bp<CR>")
+keymap("n", "<C-n>", ":bn<CR>")
+keymap("n", "<C-b>", ":bp<CR>")
 keymap("n", "<leader>C", ":bd<CR>", { desc = 'Close actual buffer' })
 
 -- Normal
@@ -21,10 +21,10 @@ keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "ss", ":split<CR>", opts)
-keymap("n", "sv", ":vsplit<CR>", opts)
+keymap("n", "ss", ":vsplit<CR>", opts)
+keymap("n", "sv", ":split<CR>", opts)
 
--- Move lines 
+-- Move lines
 keymap({ 'n', 'v' }, 'J', ':m .+1<CR>==', opts)
 keymap({ 'n', 'v' }, 'K', ':m .-2<CR>==', opts)
 
@@ -35,7 +35,7 @@ keymap('n', 'gO', 'O<Esc>j', { desc = 'Add one line before' })
 -- Do not copy when pasted on
 keymap("x", "p", [["_dP]])
 
-keymap("n", "<leader>h", ":noh", { desc = 'Clear highlight' })
+keymap("n", "<leader>ch", ":noh<CR>", { desc = 'Clear highlight' })
 
 -- Visual
 -- Stay in indent mode
@@ -44,7 +44,7 @@ keymap("v", ">", ">gv", opts)
 
 
 -- Insert
--- Move in line 
+-- Move in line
 keymap("i", "<A-k>", "<Esc>2wi", opts)
 keymap("i", "<A-j>", "<Esc>bi", opts)
 keymap("i", "<A-h>", "<Esc>0i", opts)
@@ -53,7 +53,7 @@ keymap("i", "<A-l>", "<Esc>$i", opts)
 keymap("i", "<A-BS>", "<Esc>wdbi", opts)
 
 
--- Utils 
+-- Utils
 -- Diagnostic keymaps
 keymap('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 keymap('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -81,4 +81,3 @@ keymap("n", "<leader>w", ":lua vim.wo.wrap = not vim.wo.wrap<CR>", opts)
 -- Yank and paste from multiple files / buffers
 --keymap({'n', 'v'}, '<leader>y', '"*y', { desc = '[Y]ank between files' })
 --keymap({'n', 'v'}, '<leader>p', '"*p', { desc = '[P]aste between files' })
-

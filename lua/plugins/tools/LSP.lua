@@ -102,7 +102,14 @@ return {
             tsserver = {},
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
             eslint = {},
-
+            cssls = {
+                css = {
+                    validate = true,
+                    lint = {
+                        unknownAtRules = "ignore"
+                    }
+                },
+            },
             lua_ls = {
                 Lua = {
                     workspace = { checkThirdParty = false },
