@@ -6,7 +6,8 @@ local cfg = {
             hidden = true
         },
         buffers = {
-            initial_mode = "normal"
+            initial_mode = "normal",
+            sort_lastused = true
         }
     },
     defaults = {

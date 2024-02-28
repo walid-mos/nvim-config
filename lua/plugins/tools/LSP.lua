@@ -99,7 +99,14 @@ return {
             -- gopls = {},
             -- pyright = {},
             rust_analyzer = {},
-            tsserver = {},
+            tsserver = {
+                init_options = {
+                    preferences = {
+                        importModuleSpecifierPreference = "non-relative",
+                        includeCompletionsForModuleExports = false
+                    },
+                },
+            },
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
             eslint = {},
             cssls = {

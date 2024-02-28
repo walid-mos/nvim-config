@@ -72,6 +72,9 @@ keymap("n", "#", "#zz", opts)
 keymap({ "n", "o", "x" }, "<A-h>", "^", opts)
 keymap({ "n", "o", "x" }, "<A-l>", "g_", opts)
 
+-- Remove line ending
+keymap({ "n", "i" }, "<S-A-j>", ":join<CR>", opts)
+
 -- tailwind bearable to work with
 keymap({ "n", "x" }, "j", "gj", opts)
 keymap({ "n", "x" }, "k", "gk", opts)
