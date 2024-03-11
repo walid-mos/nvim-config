@@ -63,9 +63,12 @@ local cfg = {
 
 return {
     'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+    },
     event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
-    config = function ()
+    config = function()
         require('nvim-treesitter.configs').setup(cfg)
     end
 }

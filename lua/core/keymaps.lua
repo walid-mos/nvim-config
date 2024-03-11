@@ -13,7 +13,7 @@ keymap('n', '<leader>-', ":Telescope file_browser path=%:p:h select_buffer=true<
 -- Buffer
 keymap("n", "<C-n>", ":bn<CR>")
 keymap("n", "<C-b>", ":bp<CR>")
-keymap("n", "<leader>C", ":bd<CR>", { desc = 'Close actual buffer' })
+keymap("n", "<leader>C", ":bp|bd! # <CR>", { desc = 'Close actual buffer' })
 
 -- Normal
 -- Better window navigation
